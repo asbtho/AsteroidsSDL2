@@ -1,4 +1,5 @@
-#include "Game.hpp"
+#include "Game.h"
+#include "TextureManager.h"
 
 // PLAYER SPRITE
 SDL_Texture* playerTex;
@@ -38,9 +39,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	}
 
 	// Create Player Texture
-	SDL_Surface* tmpSurface = IMG_Load("assets/player.png");
-	playerTex = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-	SDL_FreeSurface(tmpSurface);
+	playerTex = TextureManager::LoadTexture("assets/player.png", renderer);
 
 }
 
