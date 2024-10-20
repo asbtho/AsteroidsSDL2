@@ -158,12 +158,6 @@
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\Player.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="assets\player.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="config\player.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
