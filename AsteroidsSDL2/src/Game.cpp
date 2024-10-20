@@ -29,8 +29,13 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		if (renderer) {
-			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+			//SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 			std::cout << "Renderer created!" << std::endl;
+		}
+
+		screen = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, width, height);
+		if (screen) {
+			std::cout << "Screen created!" << std::endl;
 		}
 
 		isRunning = true;
@@ -39,7 +44,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	}
 
 	// Create Player Texture
-	playerTex = TextureManager::LoadTexture("assets/player.png", renderer);
+	playerTex = TextureManager::LoadTexture("assets/playerwhite.png", renderer);
 
 }
 
