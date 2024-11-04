@@ -5,11 +5,20 @@
 
 class Player : public GameObject {
 public:
+    enum rotateDir { 
+        LEFT = 1, 
+        RIGHT = 2, 
+        NONE = 0 
+    };
+
     Player();
     ~Player();
 
     virtual void trace();
+    virtual void updatePosition();
     virtual void draw(SDL_Renderer* r);
+
+    void rotate(const int& val) { rot = val; }
 private:
     SDL_Point baseFormula(const int& a, const int& b, const int& c, const int& d);
 
@@ -22,4 +31,6 @@ private:
     };
 
     SDL_Point* ship = NULL;
+
+    int rot = NONE;
 };

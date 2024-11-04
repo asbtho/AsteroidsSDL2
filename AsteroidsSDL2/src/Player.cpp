@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <iostream>
 
 Player::Player(){
     prevPosition = { 400, 400 };
@@ -21,6 +22,22 @@ void Player::trace(){
 
     for (int i = 0; i < 5; i++) {
         ship[i] = baseFormula(shipPoints[i][0], shipPoints[i][1], shipPoints[i][2], shipPoints[i][3]);
+    }
+}
+
+void Player::updatePosition(){
+    switch (rot) {
+        case LEFT: {
+            angle -= 0.1;
+            break;
+        }
+        case RIGHT: {
+            angle += 0.1;
+            break;
+        }
+        case NONE: {
+            break;
+        }
     }
 }
 

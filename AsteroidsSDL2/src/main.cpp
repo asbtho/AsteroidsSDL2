@@ -16,9 +16,9 @@ int main(int argc, char *argv[]) {
 	while (game->running()) {
 		frameStart = SDL_GetTicks(); // Get milliseconds since SDL lib init
 
-		game->handleEvents();
-		game->update();
-		game->render();
+		game->handleEvents(); // Handle inputs
+		game->update();		  // Update objects, locations, etc.
+		game->render();		  // Draw objects
 
 		frameTime = SDL_GetTicks() - frameStart; // Calculate one frame's time
 
