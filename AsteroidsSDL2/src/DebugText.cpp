@@ -13,6 +13,12 @@ DebugText::DebugText() {
 
 DebugText::~DebugText() {
     TTF_CloseFont(Sans);
+    SDL_FreeSurface(angleMessage);
+    SDL_FreeSurface(speedMessage);
+    SDL_FreeSurface(velocityMessage);
+    SDL_DestroyTexture(angleTexture);
+    SDL_DestroyTexture(speedTexture);
+    SDL_DestroyTexture(velocityTexture);
 }
 
 void DebugText::init(SDL_Renderer* r) {
@@ -39,10 +45,6 @@ void DebugText::init(SDL_Renderer* r) {
         std::cout << "Message texture FAILED" << std::endl;
         std::cout << TTF_GetError() << std::endl;
     }
-
-    SDL_FreeSurface(angleMessage);
-    SDL_FreeSurface(speedMessage);
-    SDL_FreeSurface(velocityMessage);
 }
 
 void DebugText::updateText(SDL_Renderer* r, float angle, float speed, float* velocity) {
@@ -50,15 +52,20 @@ void DebugText::updateText(SDL_Renderer* r, float angle, float speed, float* vel
         std::string angleString = std::string("Angle: ") + std::to_string(angle);
         std::string speedString = std::string("Speed: ") + std::to_string(speed);
         std::string velocityString = std::string("Velocity X: ") + std::to_string(velocity[0]) + std::string(" Y: ") + std::to_string(velocity[1]);
-        angleMessage = TTF_RenderText_Solid(Sans, angleString.c_str(), color);
-        speedMessage = TTF_RenderText_Solid(Sans, speedString.c_str(), color);
-        velocityMessage = TTF_RenderText_Solid(Sans, velocityString.c_str(), color);
-        angleTexture = SDL_CreateTextureFromSurface(r, angleMessage);
-        speedTexture = SDL_CreateTextureFromSurface(r, speedMessage);
-        velocityTexture = SDL_CreateTextureFromSurface(r, velocityMessage);
+        // Update surface content directly
         SDL_FreeSurface(angleMessage);
         SDL_FreeSurface(speedMessage);
         SDL_FreeSurface(velocityMessage);
+        angleMessage = TTF_RenderText_Solid(Sans, angleString.c_str(), color);
+        speedMessage = TTF_RenderText_Solid(Sans, speedString.c_str(), color);
+        velocityMessage = TTF_RenderText_Solid(Sans, velocityString.c_str(), color);
+        // Update textures
+        SDL_DestroyTexture(angleTexture);
+        SDL_DestroyTexture(speedTexture);
+        SDL_DestroyTexture(velocityTexture);
+        angleTexture = SDL_CreateTextureFromSurface(r, angleMessage);
+        speedTexture = SDL_CreateTextureFromSurface(r, speedMessage);
+        velocityTexture = SDL_CreateTextureFromSurface(r, velocityMessage);
     }
 }
 

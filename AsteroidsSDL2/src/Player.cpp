@@ -26,7 +26,6 @@ void Player::trace(){
 }
 
 void Player::updatePosition(){
-    std::cout << thrust << std::endl;
     if (thrust) {
         speed += 0.1;
         if (speed > 5) {
