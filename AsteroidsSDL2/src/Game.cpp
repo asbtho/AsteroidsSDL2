@@ -38,19 +38,25 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 void Game::updateShip(const int& action, bool down){
 	if (down) {
 		switch (action) {
-		case Game::LEFT:
+		case UP:
+			player.thrusting(true);
+			break;
+		case LEFT:
 			player.rotate(Player::LEFT);
 			break;
-		case Game::RIGHT:
+		case RIGHT:
 			player.rotate(Player::RIGHT);
 			break;
 		}
 	} else {
 		switch (action) {
-		case Game::LEFT:
+		case UP:
+			player.thrusting(false);
+			break;
+		case LEFT:
 			player.rotate(Player::NONE);
 			break;
-		case Game::RIGHT:
+		case RIGHT:
 			player.rotate(Player::NONE);
 			break;
 		}
@@ -64,21 +70,29 @@ void Game::handleEvents() {
 			break;
 		}
 		if (event.type == SDL_KEYDOWN) {
+			if (event.key.keysym.scancode == SDL_SCANCODE_UP ||
+				event.key.keysym.scancode == SDL_SCANCODE_W) {
+				updateShip(UP, true);
+			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_LEFT ||
 				event.key.keysym.scancode == SDL_SCANCODE_A) {
-				updateShip(Game::LEFT, true);
+				updateShip(LEFT, true);
 			}
 			else if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT ||
 				event.key.keysym.scancode == SDL_SCANCODE_D) {
-				updateShip(Game::RIGHT, true);
+				updateShip(RIGHT, true);
 			}
 		}
 		if (event.type == SDL_KEYUP) {
+			if (event.key.keysym.scancode == SDL_SCANCODE_UP ||
+				event.key.keysym.scancode == SDL_SCANCODE_W) {
+				updateShip(UP, false);
+			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_LEFT ||
 				event.key.keysym.scancode == SDL_SCANCODE_RIGHT ||
 				event.key.keysym.scancode == SDL_SCANCODE_A ||
 				event.key.keysym.scancode == SDL_SCANCODE_D) {
-				updateShip(Game::LEFT, false);
+				updateShip(LEFT, false);
 			}
 		}
 	}
@@ -87,6 +101,7 @@ void Game::handleEvents() {
 void Game::update() {
 	player.updatePosition(); // Runs player update position function
 	player.trace();			 // Runs player trace lines function based on angle and x, y location
+	debugtext.updateText(renderer, player.getAngle(), player.getSpeed(), player.getVelocity());
 }
 
 void Game::render() {

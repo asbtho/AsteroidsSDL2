@@ -26,6 +26,19 @@ void Player::trace(){
 }
 
 void Player::updatePosition(){
+    std::cout << thrust << std::endl;
+    if (thrust) {
+        speed += 0.1;
+        if (speed > 5) {
+            speed = 5;
+        }
+        velocity[0] += speed * cosA;
+        velocity[1] += speed * sinA;
+    }
+    else {
+        speed = 0;
+    }
+
     switch (rot) {
         case LEFT: {
             angle -= 0.1;
@@ -39,11 +52,19 @@ void Player::updatePosition(){
             break;
         }
     }
+
+    position.x = prevPosition.x - velocity[0];
+    position.y = prevPosition.y - velocity[1];
+
+    prevPosition.x = position.x;
+    prevPosition.y = position.y;
 }
 
 void Player::draw(SDL_Renderer* r) {
     SDL_SetRenderDrawColor(r, 255, 255, 255, 255);
-    SDL_RenderDrawLines(r, ship, 5);
+    if (alive) {
+        SDL_RenderDrawLines(r, ship, 5);
+    }
 }
 
 SDL_Point Player::baseFormula(const int& a, const int& b, const int& c, const int& d){

@@ -6,8 +6,8 @@
 class Player : public GameObject {
 public:
     enum rotateDir { 
-        LEFT = 1, 
-        RIGHT = 2, 
+        LEFT = 1,
+        RIGHT = 2,
         NONE = 0 
     };
 
@@ -19,6 +19,10 @@ public:
     virtual void draw(SDL_Renderer* r);
 
     void rotate(const int& val) { rot = val; }
+    void thrusting(const bool& val) { thrust = val; }
+
+    inline bool isAlive() { return alive; }
+    inline float getSpeed() { return speed; }
 private:
     SDL_Point baseFormula(const int& a, const int& b, const int& c, const int& d);
 
@@ -33,4 +37,8 @@ private:
     SDL_Point* ship = NULL;
 
     int rot = NONE;
+    float speed = 0.0;
+
+    bool thrust = false;
+    bool alive = true;
 };
