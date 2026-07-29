@@ -9,6 +9,7 @@ Game::~Game() {
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen) {
 	int flags = 0;
+	uint32_t current_fps = 0;
 	if (fullscreen) {
 		flags = SDL_WINDOW_FULLSCREEN;
 	}
@@ -82,6 +83,10 @@ void Game::handleEvents() {
 				event.key.keysym.scancode == SDL_SCANCODE_D) {
 				updateShip(RIGHT, true);
 			}
+			else if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE){
+				isRunning = false;
+				break;
+			}
 		}
 		if (event.type == SDL_KEYUP) {
 			if (event.key.keysym.scancode == SDL_SCANCODE_UP ||
@@ -98,10 +103,10 @@ void Game::handleEvents() {
 	}
 }
 
-void Game::update() {
-	player.updatePosition(); // Runs player update position function
+void Game::update(double delta_time) {
+	player.updatePosition(delta_time); // Runs player update position function
 	player.trace();			 // Runs player trace lines function based on angle and x, y location
-	debugtext.updateText(renderer, player.getAngle(), player.getSpeed(), player.getVelocity());
+	debugtext.updateText(renderer, player.getAngle(), player.getSpeed(), player.getVelocity(), current_fps);
 }
 
 void Game::render() {
@@ -117,4 +122,8 @@ void Game::clean() {
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
 	std::cout << "Game cleaned!" << std::endl;
+}
+
+void Game::setCurrentFPS(float fps) {
+	current_fps = fps;
 }
