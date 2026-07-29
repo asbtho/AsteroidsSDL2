@@ -2,8 +2,8 @@
 #ifndef Game_hpp
 #define Game_hpp
 
-#include "SDL.h"
-#include "SDL_image.h"
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
 #include "Player.h"
 #include "DebugText.h"
 #include <iostream>
@@ -25,12 +25,13 @@ public:
 
 	void updateShip(const int& action, bool down);
 	void handleEvents();
-	void update();
+	void update(double delta_time);
 	void render();
 	void clean();
+	void setCurrentFPS(float fps);
 
 	bool running() { return isRunning; }
-
+	
 private:
 	bool isRunning;
 	SDL_Event event;
@@ -38,6 +39,7 @@ private:
 	SDL_Renderer* renderer;
 	Player player;
 	DebugText debugtext;
+	uint32_t current_fps;
 };
 
 #endif /* Game_hpp */

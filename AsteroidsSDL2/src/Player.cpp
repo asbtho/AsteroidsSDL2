@@ -2,8 +2,8 @@
 #include <iostream>
 
 Player::Player(){
-    prevPosition = { 400, 400 };
-    position = { 400, 400 };
+    prevPosition = { 400.0, 400.0 };
+    position = { 400.0, 400.0 };
     ship = new SDL_Point[5];
 
     velocity[0] = 0.0;
@@ -21,11 +21,11 @@ void Player::trace(){
     sinA = sin(angle);
 
     for (int i = 0; i < 5; i++) {
-        ship[i] = baseFormula(shipPoints[i][0], shipPoints[i][1], shipPoints[i][2], shipPoints[i][3]);
+        ship[i] = rotateTransform(shipPoints[i][0], shipPoints[i][1], shipPoints[i][2], shipPoints[i][3]);
     }
 }
 
-void Player::updatePosition(){
+void Player::updatePosition(double delta_time){
     if (thrust) {
         speed += 0.1;
         if (speed > 5) {
@@ -40,11 +40,11 @@ void Player::updatePosition(){
 
     switch (rot) {
         case LEFT: {
-            angle -= 0.1;
+            angle -= 0.15;
             break;
         }
         case RIGHT: {
-            angle += 0.1;
+            angle += 0.15;
             break;
         }
         case NONE: {
@@ -52,8 +52,8 @@ void Player::updatePosition(){
         }
     }
 
-    position.x = prevPosition.x - velocity[0];
-    position.y = prevPosition.y - velocity[1];
+    position.x = prevPosition.x - velocity[0] * 2 * delta_time;
+    position.y = prevPosition.y - velocity[1] * 2 * delta_time;
 
     prevPosition.x = position.x;
     prevPosition.y = position.y;
@@ -66,6 +66,6 @@ void Player::draw(SDL_Renderer* r) {
     }
 }
 
-SDL_Point Player::baseFormula(const int& a, const int& b, const int& c, const int& d){
+SDL_Point Player::rotateTransform(const int& a, const int& b, const int& c, const int& d){
     return { int(cosA * a - sinA * b + position.x), int(sinA * c + cosA * d + position.y) };
 }

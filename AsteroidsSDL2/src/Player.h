@@ -1,7 +1,7 @@
 #pragma once
 #include <cmath>
 #include "GameObject.h"
-#include "SDL.h"
+#include "SDL2/SDL.h"
 
 class Player : public GameObject {
 public:
@@ -15,7 +15,7 @@ public:
     ~Player();
 
     virtual void trace();
-    virtual void updatePosition();
+    virtual void updatePosition(double delta_time);
     virtual void draw(SDL_Renderer* r);
 
     void rotate(const int& val) { rot = val; }
@@ -24,7 +24,7 @@ public:
     inline bool isAlive() { return alive; }
     inline float getSpeed() { return speed; }
 private:
-    SDL_Point baseFormula(const int& a, const int& b, const int& c, const int& d);
+    SDL_Point rotateTransform(const int& a, const int& b, const int& c, const int& d);
 
     int shipPoints[5][4] = {
         { -10, 1, -10, 1 },

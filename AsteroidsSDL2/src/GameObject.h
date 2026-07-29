@@ -1,17 +1,17 @@
 #pragma once
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
 #include "Drawable.h"
 
 class GameObject : public Drawable
 {
 public:
     inline float* getVelocity() { return velocity; }
-    inline SDL_Point getPosition() { return position; }
+    inline SDL_FPoint getPosition() { return position; }
     inline float getAngle() { return angle; }
 protected:
-    SDL_Point prevPosition;
-    SDL_Point position;
+    SDL_FPoint prevPosition;
+    SDL_FPoint position;
 
     float angle = 0.0;
     float velocity[2];
